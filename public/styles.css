@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tittle{
+    margin: 15px;
+}
+
+#table-container{
+    margin: 15px;
+}
+
+/* Seccion para agregar usuarios */
+
+#createSection{
+    margin-bottom: 15px;
+}
+
+.mui-btn{
+    margin-left: 15px!important;
+}
+
+.userCreationBtn:hover{
+    background-color: lightgray;
+}
+/* Tabla de usuarios */
+
+#divTable{
+    text-align: left;
+}
+
+#initialTable{
+    border-spacing: 0;
+    width: 90%;
+    font-size: 15px;
+    /* display: flex; */
+}
+
+#tableGeneral:nth-child(1){
+    background-color: #2ebd88;
+    color: white;
+}
+
+
+table > tr:hover {
+    cursor: pointer;
+}
+
+.columnData{
+    padding: 15px 15px 15px 5px;
+}
+
+/* Users details */
+
+.divDetails{
+    width: 550px;
+    height: 500px;
+    margin: 100px auto;
+    background-color: rgb(248, 242, 242);
+    border-radius: 35px 35px 1px 1px;
+}
+
+.divTopSection{
+    display: flex;
+}
+
+.mui-row:nth-child(1){
+    height: 50px;
+}
+
+.mui-row:nth-child(2){
+    height: 320px;
+}
+
+.mui-row:nth-child(3){
+    height: 120px;
+    margin-top: 5%;
+    margin-left: 5px;
+}
+
+.mui-col-md-4{
+    height: 105px;
+    font-size: 12px;
+    padding-left: 0!important;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.mui-col-md-4 > p{
+    padding: 10px;
+    border-radius: 3px;
+    color: grey;
+    background-color: white;
+}
+
+.mui-col-md-6{
+    font-size: 20px;
+    width: 43%!important;
+    padding-top: 20px;
+}
+
+.mui-col-md-6 > p{
+    padding: 0;
+    margin: 0;
+    width: 15px;
+}
+
+.mui-col-md-6 > p:hover{
+    cursor: pointer;
+}
+
+.personImg{
+    height: 225px;
+    width: 35%!important;
+    margin-top: 15px;
+    margin-left: 180px;
+    border: 6px orange solid;
+    border-radius: 75%;
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+.personName{
+    font-size: 18px;
+    text-align: center;
+    padding-top: 15px;
+}
