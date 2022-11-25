@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const user = 'usuarios';
+const password = 'uHEENotEJll6j6lI';
 const DB_URI = `mongodb://localhost/users`;
 
 module.exports = () =>{

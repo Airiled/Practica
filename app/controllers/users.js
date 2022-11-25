@@ -1,26 +1,62 @@
 const { default: mongoose } = require('mongoose');
+const users = require('../models/users');
 const model = require('../models/users');
 
 const parseId = (id) => {
     return mongoose.Types.ObjectId(id);
 }
 
-exports.getData = (req, res)=>{  //nos trae los valores de la base de datos
+exports.prueba = async (req, res) => {
+    const usuariosDB = await users.find();
+    console.log(usuariosDB);
+    model.find({}, (err, docs) => {
+        // res.send({
+        //     docs: docs[10]
+        // })
+        createUserRow(docs);
+    })
+}
+
+exports.getData = async (req, res)=>{  //nos trae los valores de la base de datos
+    // try {
+    //     const arrayUserDB = await users.find()
+    //     console.log(arrayUserDB);
+    //     res.render('index', {
+    //         arrayUserDB
+    //     })
+    // } catch (error) {
+    //     console.log(error);
+    // }
     model.find({}, (err, docs) => {
         res.send({
             docs
         })
+        console.log(docs[10]);
     })
 }
 
-exports.insertData = (req, res) => { //crear usuario
+exports.insertData = async (req, res) => { //crear usuario
     const data = req.body;
-    model.create(data, (err, docs) => {
+    model.create(data, async (err, docs) => {
         if(err){
             res.send({error: 'Error'}, 422);
         }else{
             res.send({data: docs});
         }
+
+        // const res = await fetch('https://jsonplaceholder.typicode.com/users/create', {
+        // method: 'POST',
+        // body: JSON.stringify({
+        //     userId: 11,
+        //     user
+        // }),
+        // headers: {
+        //     'Content-type': 'application/json; charset=UTF-8',
+        // },
+        // })
+        // .then((response) => response.json())
+        // .then((json) => console.log(json));
+
     })
 }
 

@@ -1,35 +1,38 @@
 const express = require('express');
-
-const controller = require('../controllers/users');
-
+const controller = require('../controllers/users.js');
 const router = express.Router(); //definimos la ruta
-
 const path = 'users'; //variable para el EP
 
+const users = require('../models/users');
 //Creamos las diferentes rutas para las peticiones pedidas
 
 router.get(
-    `/${path}/data`,
+    `/prueba`, 
+    controller.prueba
+);
+
+router.get(
+    `/data`,
     controller.getData
 );
 
 router.post(
-    `/${path}/create`,
+    `/create`,
     controller.insertData
 )
 
 router.get(
-    `/${path}/:id`,
+    `/:id`,
     controller.getUser
 )
 
 router.put(
-    `/${path}/update/:id`,
+    `/update/:id`,
     controller.updateData
 )
 
 router.delete(
-    `/${path}/delete/:id`,
+    `/delete/:id`,
     controller.deleteData
 )
 

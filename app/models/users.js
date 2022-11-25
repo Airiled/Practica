@@ -18,7 +18,10 @@ const UserScheme =  new mongoose.Schema(
         },
         website:{
             type: String
-        }
+        },
+        image:{
+            type: String
+        },
     },
     {
         versionKey: false,

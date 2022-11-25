@@ -5,10 +5,88 @@ const table = document.querySelector('#initialTable');
 const divTable = document.querySelector('#divTable');
 const tableContainer = document.querySelector('#table-container');
 
+const newUserButton = document.querySelector('#newUserButton');
+newUserButton.addEventListener('click', createNewUser);
+
 let aux = true; // variable para colocarle el fondo de color a las filas de la tabla
+
+function showUserDetails(user){
+    var modalEl = document.createElement('div');
+    modalEl.classList.add('divDetails');
+
+    mui.overlay('on', modalEl);
+
+    //Top Section
+    const xMenu = document.createElement('div');
+    xMenu.classList.add('mui-col-md-6', 'x');
+    const x = document.createElement('p');
+    x.innerHTML = 'X';
+    x.addEventListener('click', () =>{
+        mui.overlay('off', modalEl);
+    })
+
+    const profile = document.createElement('div');
+    profile.classList.add('mui-col-md-6', 'profile');
+    profile.innerHTML = 'Perfil';
+
+    const divTopSection = document.createElement('div');
+    divTopSection.classList.add('mui-row');
+
+    //Middle section
+
+    const personImg = document.createElement('img');
+    personImg.src = `./images/${username}.jpg`;
+    personImg.classList.add('mui-col-md-12', 'personImg');
+    personImg.setAttribute('alt', 'Imagen del Usuario')
+
+    const personName = document.createElement('div');
+    personName.innerHTML = name;
+    personName.classList.add('mui-col-md-12', 'personName');
+
+    const divMiddleSection = document.createElement('div');
+    divMiddleSection.classList.add('mui-row');
+
+    //Bottom section
+
+    const personPhone = document.createElement('div');
+    personPhone.classList.add('mui-col-md-4');
+    const pPhone = document.createElement('p');
+    pPhone.innerHTML = `${phone}`;
+
+    const personEmail = document.createElement('div');
+    personEmail.classList.add('mui-col-md-4');
+    const pEmail = document.createElement('p');
+    pEmail.innerHTML = `${email}`;
+
+    const personWebsite = document.createElement('div');
+    personWebsite.classList.add('mui-col-md-4');
+    const pWebsite = document.createElement('p');
+    pWebsite.innerHTML = `${website}`;
+
+    const divBottomSection = document.createElement('div');
+    divBottomSection.classList.add('mui-row');
+
+    const divsContainer = document.createElement('div');
+    divsContainer.classList.add('mui-container-fluid');
+
+    xMenu.append(x);
+    divTopSection.append(xMenu, profile);
+
+    divMiddleSection.append(personImg, personName);
+
+    personPhone.append(pPhone);
+    personEmail.append(pEmail);
+    personWebsite.append(pWebsite);
+    divBottomSection.append(personPhone, personEmail, personWebsite);
+    
+    divsContainer.append(divTopSection, divMiddleSection, divBottomSection);
+    modalEl.append(divsContainer);    
+}
+
 
 function createUserRow(users){
     //Creamos las filas mediante los datos de la API o de los valores introducidos por el usuario
+    if(!users || !users.length) return;
     users.forEach(user => {
         const tdName = document.createElement('td');
         tdName.classList.add('columnData');
@@ -29,6 +107,15 @@ function createUserRow(users){
         const tdWeb = document.createElement('td');
         tdWeb.classList.add('columnData');
         tdWeb.innerHTML = user.website;
+
+        const deleteIcon = document.createElement('img');
+        deleteIcon.classList.add('deleteIcon');
+        deleteIcon.src = './images/delete.png';
+        deleteIcon.addEventListener('click', async () => {
+            const res = await fetch(`http://localhost:3001/users/delete/${user._id}`, {
+                method: 'DELETE',
+            });
+        })
 
         const trData = document.createElement('tr');
         //agregamos la funcion para la vista de detalles de los usuarios
@@ -58,7 +145,7 @@ function createUserRow(users){
             //Middle section
 
             const personImg = document.createElement('img');
-            personImg.src = `./images/${user.username}.jpg`;
+            personImg.src = user.image || `./images/${user.username}.jpg`;
             personImg.classList.add('mui-col-md-12', 'personImg');
             personImg.setAttribute('alt', 'Imagen del Usuario')
 
@@ -115,7 +202,7 @@ function createUserRow(users){
             aux = true;
         }
 
-        trData.append(tdName, tdUsername, tdEmail, tdPhone, tdWeb);
+        trData.append(tdName, tdUsername, tdEmail, tdPhone, tdWeb, deleteIcon);
         table.append(trData);
         divTable.append(table);
         tableContainer.append(divTable);
@@ -125,24 +212,37 @@ function createUserRow(users){
 
 async function getUsersData(){
     //Obtenemos los valores de la API
-    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    // const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    const res = await fetch('http://localhost:3001/users/data');
     const data = await res.json();
-    const users = data;
+    const users = data && data.docs ? data.docs : [];
 
     createUserRow(users);
 }
 
-function createNewUser(){
-    //Creamos un array que contenga un objeto para poder hacer funcionar el forEach a la hora de querer crear la fila del nuevo usuario
+async function createNewUser(){
     const user = [{
         name: prompt('Name: '),
         username: prompt('Username: '),
         email: prompt('Email: '),
         phone: prompt('Phone: '),
-        website: prompt('Website:'),
+        website: prompt('Website: '),
+        image: prompt('URL Image: '),
     }];
+    const res = await fetch('http://localhost:3001/users/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+    //Creamos un array que contenga un objeto para poder hacer funcionar el forEach a la hora de querer crear la fila del nuevo usuario
+    
+
+    console.log('termine');
 
     createUserRow(user);
 }
+
 
 getUsersData();

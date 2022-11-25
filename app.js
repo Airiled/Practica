@@ -7,6 +7,9 @@ const userRouters = require('./app/routes/users'); //accedemos a la carpeta de r
 
 // bodyParser = bodyParser.json();
 
+// app.set('view engine', 'ejs');
+// app.set('views', __dirname + '/views')
+
 app.use(
     bodyParser.json({
         limit: '20mb'
@@ -20,17 +23,18 @@ app.use(
     })
 )
  
-app.use(userRouters);
 
 app.use(express.static(__dirname + '/public')); //establecemos esa ruta como estatica que es donde se guardan todos los archivos css, js, imgs ect
 
-app.listen(3001, ()=>{ // establecemos el puerto donde va a correr el server
-    console.log('Server corriendo en puerto 3001');
+//rutas web
+app.use('/users', require('./app/routes/users'));
+
+app.get('/', (req, res)=>{ 
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 })
 
-
-app.get('/users', (req, res)=>{ 
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+app.listen(3001, ()=>{ // establecemos el puerto donde va a correr el server
+    console.log('Server corriendo en puerto 3001');
 })
 
 
