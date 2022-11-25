@@ -211,8 +211,6 @@ function createUserRow(users){
 }
 
 async function getUsersData(){
-    //Obtenemos los valores de la API
-    // const res = await fetch('https://jsonplaceholder.typicode.com/users');
     const res = await fetch('http://localhost:3001/users/data');
     const data = await res.json();
     const users = data && data.docs ? data.docs : [];

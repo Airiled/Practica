@@ -7,11 +7,6 @@ const users = require('../models/users');
 //Creamos las diferentes rutas para las peticiones pedidas
 
 router.get(
-    `/prueba`, 
-    controller.prueba
-);
-
-router.get(
     `/data`,
     controller.getData
 );

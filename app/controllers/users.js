@@ -6,27 +6,7 @@ const parseId = (id) => {
     return mongoose.Types.ObjectId(id);
 }
 
-exports.prueba = async (req, res) => {
-    const usuariosDB = await users.find();
-    console.log(usuariosDB);
-    model.find({}, (err, docs) => {
-        // res.send({
-        //     docs: docs[10]
-        // })
-        createUserRow(docs);
-    })
-}
-
 exports.getData = async (req, res)=>{  //nos trae los valores de la base de datos
-    // try {
-    //     const arrayUserDB = await users.find()
-    //     console.log(arrayUserDB);
-    //     res.render('index', {
-    //         arrayUserDB
-    //     })
-    // } catch (error) {
-    //     console.log(error);
-    // }
     model.find({}, (err, docs) => {
         res.send({
             docs
